@@ -1,0 +1,32 @@
+#!/bin/sh
+
+PROG=x264
+PROG_PATH="/data/app/$PROG"
+PROG_PATH_LIB="$PROG_PATH/lib"
+PROG_PATH_BIN="$PROG_PATH/bin"
+PROG_PATH_INCLUDE="$PROG_PATH/include"
+
+declare -i PROG_PATH_LEN=${#PROG_PATH_LIB}
+PROG_PATH_LEN=$(($PROG_PATH_LEN+2))
+MSG_PREFIX=" *"
+
+echo "$MSG_PREFIX start install $PROG"
+
+if [ -d "$PROG_PATH" ] ; then
+	rm -rf $PROG_PATH
+fi
+
+mkdir -p $PROG_PATH
+
+cp  -v -r -n ./lib $PROG_PATH_LIB
+cp  -v -r -n ./bin $PROG_PATH_BIN
+cp -v -r -n ./include $PROG_PATH_INCLUDE
+
+
+ls $PROG_PATH_LIB/libx*.so* | xargs -i -n1  echo "{}" | cut -c $PROG_PATH_LEN- | xargs -i -n1  echo "ln -f -s ${PROG_PATH_LIB}/{} /usr/lib/{}" | sh
+if [ -f "/usr/bin/$PROG" ] ; then
+	rm -rf /usr/bin/$PROG
+else 
+	ln -s $PROG_PATH/bin/$PROG /usr/bin/$PROG
+fi
+echo "$MSG_PREFIX install sucess $PROG"

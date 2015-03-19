@@ -1,0 +1,22 @@
+#!/bin/bash
+
+PROG=librtmp
+PROG_PATH="/data/app/$PROG"
+
+declare -i PROG_PATH_LEN=${#PROG_PATH}
+PROG_PATH_LEN=$(($PROG_PATH_LEN+2))
+MSG_PREFIX=" *"
+
+echo "$MSG_PREFIX start install $PROG"
+
+if [ -d "$PROG_PATH" ] ; then
+	rm -rf $PROG_PATH
+fi
+
+mkdir -p $PROG_PATH
+
+cp  -v -r -n ./lib* $PROG_PATH
+
+ls $PROG_PATH/lib*.so* | xargs -i -n1  echo "{}" | cut -c $PROG_PATH_LEN- | xargs -i -n1  echo "ln -f -s ${PROG_PATH}/{} /usr/lib/{}" | sh
+
+echo "$MSG_PREFIX install sucess $PROG"

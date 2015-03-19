@@ -1,0 +1,31 @@
+#!/bin/sh
+
+## Check to see if we are running as root first.
+
+MSG_PREFIX=" *"
+ROOT_DIR="$PWD"
+if [ "$(id -u)" != "0" ] ; then
+    echo "this script must be run as root" 1>&2
+    exit 1
+fi
+
+echo  "\n============== cubie library init ====================="
+
+ls -l | awk '{print $9}' |xargs -i -n1  echo "$PWD/{}/install" | while read line
+do
+	if [ -f "$line" ] ; then 
+		echo "\n$MSG_PREFIX run script $line"
+		dir_path=`dirname $line`
+		echo "$MSG_PREFIX $dir_path"
+		cd $dir_path
+		echo "$MSG_PREFIX $PWD"
+		sh $line
+		cd $ROOT_DIR
+		echo "$MSG_PREFIX $PWD"
+	else
+		echo "$MSG_PREFIX  $line not file"
+	fi
+	
+done
+
+echo "\n =============== cubie library end =====================\n"
