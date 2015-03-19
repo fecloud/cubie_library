@@ -1,0 +1,30 @@
+#!/bin/sh
+
+PROG=apache-ant-1.9.4
+PROG_PATH="/data/app/$PROG"
+PROG_PATH_LIB="$PROG_PATH/lib"
+PROG_PATH_BIN="$PROG_PATH/bin"
+PROG_PATH_ETC="$PROG_PATH/etc"
+MSG_PREFIX=" *"
+
+echo "$MSG_PREFIX start install $PROG"
+
+if [ -d "$PROG_PATH" ] ; then
+	rm -rf $PROG_PATH
+fi
+
+mkdir -p $PROG_PATH
+
+cp  -v -r -n ./lib $PROG_PATH_LIB
+cp  -v -r -n ./bin $PROG_PATH_BIN
+cp -v -r -n ./etc $PROG_PATH_ETC
+
+ant_export=`cat /etc/profile | grep ANT_HOME | head -n 1 | wc -L`
+if [ $ant_export -gt 0 ] ; then
+	echo "$MSG_PREFIX not add ANT_HOME to /etc/profile"
+else
+	echo "\nexport ANT_HOME=$PROG_PATH" >> /etc/profile
+	echo "\nexport PATH=\$PATH:\$ANT_HOME/bin" >> /etc/profile
+fi
+
+echo "$MSG_PREFIX install sucess $PROG"

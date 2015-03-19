@@ -1,0 +1,29 @@
+#!/bin/sh
+
+PROG=jdk1.8.0_33
+PROG_PATH="/data/app/$PROG"
+MSG_PREFIX=" *"
+
+echo "$MSG_PREFIX start install $PROG"
+
+if [ -d "$PROG_PATH" ] ; then
+	rm -rf $PROG_PATH
+fi
+
+mkdir -p $PROG_PATH
+
+cp  -v -r -n ./bin $PROG_PATH/
+cp  -v -r -n ./db $PROG_PATH/
+cp  -v -r -n ./include $PROG_PATH/
+cp  -v -r -n ./jre $PROG_PATH/
+cp  -v -r -n ./lib $PROG_PATH/
+
+ant_export=`cat /etc/profile | grep JAVA_HOME | head -n 1 | wc -L`
+if [ $ant_export -gt 0 ] ; then
+	echo "$MSG_PREFIX not add JAVA_HOME to /etc/profile"
+else
+	echo "\nexport JAVA_HOME=$PROG_PATH" >> /etc/profile
+	echo "\nexport PATH=\$PATH:\$JAVA_HOME/bin" >> /etc/profile
+fi
+
+echo "$MSG_PREFIX install sucess $PROG"
