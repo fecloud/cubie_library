@@ -1,0 +1,24 @@
+#!/bin/sh
+
+PROG=A20-sunxi
+PROG_PATH="/data/app/$PROG"
+
+MSG_PREFIX=" *"
+
+echo "$MSG_PREFIX start install $PROG"
+
+if [ -d "$PROG_PATH" ] ; then
+	rm -rf $PROG_PATH
+fi
+
+mkdir -p $PROG_PATH
+
+cp  -v -n libvencoder.so $PROG_PATH/libvencoder.so
+
+if [ -f "/usr/bin/libvencoder.so" ] ; then
+	rm -rf /usr/bin/$PROG
+fi
+
+ln -s $PROG_PATH/libvencoder.so /usr/lib/libvencoder.so
+
+echo "$MSG_PREFIX install sucess $PROG"
