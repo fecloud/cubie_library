@@ -1,0 +1,29 @@
+#!/bin/sh
+
+if [ $# -eq 0 -o "$1" = "-h" -o "$1" = "-help" ] ; then
+        echo "Uage:pcp [cp option] <start>"
+        exit 1
+fi
+
+start=""
+cp_option=""
+if [ $# -eq 1 ] ; then
+	start="$1"
+else
+	cp_option="$1"
+	start="$2"
+fi
+
+list=`ls`
+
+for i in $list;
+do
+        if [ "$i" \>  "$start" ] ; then
+			if [ "$cp_option" != "" ] ; then
+				echo "cp -$cp_option $i"
+			else
+				echo "cp $i"
+			fi
+		fi
+done
+exit 0

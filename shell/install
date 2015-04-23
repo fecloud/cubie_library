@@ -1,0 +1,20 @@
+#!/bin/sh
+
+PROG=shell
+PROG_PATH="/data/app/$PROG"
+
+MSG_PREFIX=" *"
+
+echo "$MSG_PREFIX start install $PROG"
+
+if [ -d "$PROG_PATH" ] ; then
+	rm -rf $PROG_PATH
+fi
+
+mkdir -p $PROG_PATH
+
+cp  -v -r -n ./* $PROG_PATH
+
+ls $PROG_PATH/ | xargs -i -n1  echo "{}" | xargs -i -n1  echo "ln -f -s $PROG_PATH/{} /usr/bin/{}" | sh
+
+echo "$MSG_PREFIX install sucess $PROG"
