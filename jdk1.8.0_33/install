@@ -18,8 +18,8 @@ cp  -v -r -n ./include $PROG_PATH/
 cp  -v -r -n ./jre $PROG_PATH/
 cp  -v -r -n ./lib $PROG_PATH/
 
-ant_export=`cat /etc/profile | grep JAVA_HOME | head -n 1 | wc -L`
-if [ $ant_export -gt 0 ] ; then
+java_export=`cat /etc/profile | grep JAVA_HOME | head -n 1 | wc -L`
+if [ $java_export -gt 0 ] ; then
 	echo "$MSG_PREFIX not add JAVA_HOME to /etc/profile"
 else
 	echo "\nexport JAVA_HOME=$PROG_PATH" >> /etc/profile
