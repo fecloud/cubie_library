@@ -13,7 +13,7 @@ fi
 
 mkdir -p $PROG_PATH
 
-cp  -v -r -n ./* $PROG_PATH
+cp  -v -r -n pcp $PROG_PATH
 
 ls $PROG_PATH/ | xargs -i -n1  echo "{}" | xargs -i -n1  echo "ln -f -s $PROG_PATH/{} /usr/bin/{}" | sh
 
