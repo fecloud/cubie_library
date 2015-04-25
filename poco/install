@@ -5,7 +5,7 @@ PROG_PATH="/data/app/$PROG"
 PROG_PATH_LIB="$PROG_PATH/lib"
 PROG_PATH_INCLUDE="$PROG_PATH/include"
 
-declare -i PROG_PATH_LEN=${#PROG_PATH_LIB}
+PROG_PATH_LEN=${#PROG_PATH_LIB}
 PROG_PATH_LEN=$(($PROG_PATH_LEN+2))
 MSG_PREFIX=" *"
 
@@ -17,9 +17,8 @@ fi
 
 mkdir -p $PROG_PATH
 
-cp  -v -r -n ./lib $PROG_PATH_LIB
-cp -v -r -n ./include $PROG_PATH_INCLUDE
-
+cp -v -r -n lib $PROG_PATH_LIB
+cp -v -r -n include $PROG_PATH_INCLUDE
 
 ls $PROG_PATH_LIB/lib*.so* | xargs -i -n1  echo "{}" | cut -c $PROG_PATH_LEN- | xargs -i -n1  echo "ln -f -s ${PROG_PATH_LIB}/{} /usr/lib/{}" | sh
 

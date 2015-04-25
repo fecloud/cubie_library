@@ -19,6 +19,6 @@ if [ -f "/usr/bin/libvencoder.so" ] ; then
 	rm -rf /usr/bin/$PROG
 fi
 
-ln -s $PROG_PATH/libvencoder.so /usr/lib/libvencoder.so
+ln -f -s $PROG_PATH/libvencoder.so /usr/lib/libvencoder.so
 
 echo "$MSG_PREFIX install sucess $PROG"

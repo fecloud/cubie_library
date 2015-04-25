@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PROG=shell
+PROG=util
 PROG_PATH="/data/app/$PROG"
 
 MSG_PREFIX=" *"

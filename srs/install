@@ -7,6 +7,8 @@ MSG_PREFIX=" *"
 
 echo "$MSG_PREFIX start install $PROG"
 
+service srs stop
+
 if [ -d "$PROG_PATH" ] ; then
 	rm -rf $PROG_PATH
 fi
@@ -17,7 +19,6 @@ cp -v -r -n ./conf $PROG_PATH/
 cp -v -r -n ./etc $PROG_PATH/
 cp -v -r -n ./objs $PROG_PATH/
 
-
 if [ -f "/etc/init.d/$PROG" ] ; then
 	rm -rf /etc/init.d/$PROG
 fi
@@ -25,4 +26,5 @@ fi
 ln -s  /usr/local/srs/etc/init.d/$PROG /etc/init.d/$PROG
 
 service srs start
+
 echo "$MSG_PREFIX install sucess $PROG"
